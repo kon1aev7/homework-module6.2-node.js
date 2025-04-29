@@ -15,6 +15,7 @@ import {
 } from '../services/movies.js';
 import { saveFileToLocal } from '../utils/saveFileToLocal.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { saveFile } from '../utils/saveFile.js';
 
 export const getMoviesController = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
@@ -82,8 +83,7 @@ export const patchMovieController = async (req, res) => {
   let posterUrl = null;
 
   if (req.file) {
-    // posterUrl = await saveFileToLocal(req.file);
-    posterUrl = await saveFileToCloudinary(req.file);
+    posterUrl = await saveFile(req.file);
   }
   const result = await updateMovie(id, { ...req.body, posterUrl });
 
